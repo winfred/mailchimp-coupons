@@ -1,0 +1,6 @@
+<div id="coupons"></div>
+<script>
+  MailchimpCoupons.Lists = <%= @lists.to_json.html_safe%>;
+  window.router = new MailchimpCoupons.Routers.CouponsRouter({coupons: <%= @coupons.to_json.html_safe %>});
+  Backbone.history.start();
+</script>
