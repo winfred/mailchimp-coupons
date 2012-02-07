@@ -4,7 +4,7 @@ class Coupon < ActiveRecord::Base
   before_destroy :destroy_merge_var
   before_update :update_merge_var_name
 
-  def set_merge_var
+  def create_merge_var
     self.tag = "COUPON#{user.next_coupon_num}"
     user.api.listMergeVarAdd(id: list_id,tag: self.tag, name: name, options: {public: false,show:false, default_value: ''})
   end
