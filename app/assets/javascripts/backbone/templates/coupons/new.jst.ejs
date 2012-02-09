@@ -1,24 +1,27 @@
 <h1>New coupon</h1>
-
+<br />
+<div class="span4">
+<div class="well">
 <form id="new-coupon" name="coupon">
-  <div class="field">
-    <label for="name"> name:</label>
+  <div class="popper field" data-position="right" data-content="Example: '25% All Items' This will be the text that is displayed as a segmentation option in MailChimp as well." title="Internal Use Only">
+    <label for="name"> Name:</label>
     <input type="text" name="name" id="name" value="<%= name %>" >
   </div>
 
   <div class="field">
-    <label for="list_id"> list: </label>
+    <label for="list_id"> List: </label>
     <select name="list_id">
       <% for (var i=0;i< MailchimpCoupons.Lists.length;i++) { %>
         <option value="<%=MailchimpCoupons.Lists[i].id%>"><%=MailchimpCoupons.Lists[i].name%></option>
       <% }%>
     </select>
   </div>
-
-  <div class="actions">
-    <input type="submit" value="Create Coupon" />
+  <br />
+  <div class="actions popper" data-position="right" data-content="A field with this name on this list is about to be created." title="What's about to happen?">
+    <input type="submit" class="btn btn-success" value="Create Coupon" />
   </div>
 
 </form>
-
-<a href="#/index">Back</a>
+</div>
+<a class="btn btn-primary" href="#/index">Back</a>
+</div>

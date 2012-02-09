@@ -5,6 +5,8 @@ class MailchimpCoupons.Views.Coupons.NewView extends Backbone.View
 
   events:
     "submit #new-coupon": "save"
+    "mouseenter .popper": "showPopover"
+    "mouseleave .popper": "hidePopover"
 
   constructor: (options) ->
     super(options)
@@ -17,9 +19,10 @@ class MailchimpCoupons.Views.Coupons.NewView extends Backbone.View
   save: (e) ->
     e.preventDefault()
     e.stopPropagation()
+    list_id = $('select[name=list_id]').val()
     @model.set {
-      list_id: $('select[name=list_id]').val()
-      list_name: $('select[name=list_id] option[value='+@model.attributes.list_id+']').text()
+      list_id: list_id
+      list_name: $('select[name=list_id] option[value='+list_id+']').text()
     }
     @model.unset("errors")
 
@@ -38,3 +41,9 @@ class MailchimpCoupons.Views.Coupons.NewView extends Backbone.View
     this.$("form").backboneLink(@model)
 
     return this
+  
+  showPopover: (e)->
+    $(e.target).popover('show')
+
+  hidePopover: (e)->
+    $(e.target).popover('hide')

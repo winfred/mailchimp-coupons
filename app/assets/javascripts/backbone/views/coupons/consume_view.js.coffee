@@ -38,7 +38,8 @@ class MailchimpCoupons.Views.Coupons.ConsumeView extends Backbone.View
     MailchimpCoupons.Views.showError("Coupon already used for <strong>#{email}</strong>.",{html:true})
 
   renderNotSubscribed: (email) ->
-    MailchimpCoupons.Views.showWarning("<strong>#{email}</strong> has not yet subscribed.<br /><br /> <button id='subscribe' class='btn btn-warning' >Do they want to?</button>",{html: true})
+    MailchimpCoupons.Views.showWarning("<strong>#{email}</strong> has not yet subscribed.<br /><br /> <button id='subscribe' data-placement='right' title='Warning!' data-content='This will send them a confirmation email.' class='btn btn-warning' >Do they want to?</button>",{html: true})
     $('#subscribe:first').data({view:this,email: email})
-    $("#subscribe:first").click -> $(this).data('view').subscribe($(this).data('email'))
+    $("#subscribe:first").popover().click -> $(this).data('view').subscribe($(this).data('email'))
+
  
