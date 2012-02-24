@@ -57,14 +57,18 @@ class MailchimpCoupons.Views.Coupons.CouponView extends Backbone.View
     button = e.target
     $(button).removeClass('send-to-consumed').addClass('disabled').text('loading')
     $.post("/coupons/#{@model.id}/send_to_consumed", (data,text,xhr) -> 
-      MailchimpCoupons.Views.showSuccess("<strong>Success!</strong> Your campaign has been created and can be edited <a href='#{data.url}' target='_blank'>here<a/>.",{html: true})
-      $(button).removeClass('disabled').addClass('send-to-consumed').text('Send to Consumers')
+      if data.result.error then MailchimpCoupons.Views.showError(data.result.error)
+      else
+        MailchimpCoupons.Views.showSuccess("<strong>Success!</strong> Your campaign has been created and can be edited <a href='#{data.result}' target='_blank'>here<a/>.",{html: true})
+        $(button).removeClass('disabled').addClass('send-to-consumed').text('Send to Consumers')
     )
     
   sendToUnconsumed: (e) ->
     button = e.target
     $(button).removeClass('send-to-unconsumed').addClass('disabled').text('loading')
     $.post("/coupons/#{@model.id}/send_to_unconsumed", (data,text,xhr) -> 
-      MailchimpCoupons.Views.showSuccess("<strong>Success!</strong> Your campaign has been created and can be edited <a href='#{data.url}' target='_blank'>here<a/>.",{html: true})
-      $(button).addClass('send-to-unconsumed').removeClass('disabled').text('Send to Non-consumers')
+      if data.result.error then MailchimpCoupons.Views.showError(data.result.error)
+      else
+        MailchimpCoupons.Views.showSuccess("<strong>Success!</strong> Your campaign has been created and can be edited <a href='#{data.result}' target='_blank'>here<a/>.",{html: true})
+        $(button).addClass('send-to-unconsumed').removeClass('disabled').text('Send to Non-consumers')
     )

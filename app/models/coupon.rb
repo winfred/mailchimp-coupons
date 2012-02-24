@@ -23,8 +23,9 @@ class Coupon < ActiveRecord::Base
   end
   
   def create_unconsumed_campaign
-    campaign_url_for(user.api.campaignCreate(default_campaign_options.merge({
-      segment_opts: {match: "all", conditions: [{field: tag, op: "ne", value: "consumed"}]}})))
+    cid = user.api.campaignCreate(default_campaign_options.merge({
+      segment_opts: {match: "all", conditions: [{field: tag, op: "ne", value: "consumed"}]}}))
+    campaign_url_for(cid)
   end
   
   def consume(email)
@@ -62,6 +63,7 @@ class Coupon < ActiveRecord::Base
     end
     
     def campaign_url_for(cid)
+      return cid if(cid['error'])
       web_id = user.api.campaigns(filters: {campaign_id: cid})['data'][0]['web_id']
       "https://#{user.api.api_key.split("-")[1]}.admin.mailchimp.com/campaigns/wizard/recipients?id=#{web_id}"
     end

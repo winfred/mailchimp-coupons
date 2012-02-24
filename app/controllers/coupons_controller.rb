@@ -98,11 +98,11 @@ class CouponsController < ApplicationController
 
   def send_to_consumed
     @coupon = current_user.coupons.find(params[:id])
-    render json: {url: @coupon.create_consumed_campaign}
+    render json: {result: @coupon.create_consumed_campaign}
   end
   
   def send_to_unconsumed
     @coupon = current_user.coupons.find(params[:id])
-    render json: {url: @coupon.create_unconsumed_campaign}
+    render json: {result: @coupon.create_unconsumed_campaign}
   end
 end
