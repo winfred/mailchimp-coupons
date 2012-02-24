@@ -15,6 +15,13 @@ class MailchimpCoupons.Views.Coupons.CouponView extends Backbone.View
   destroy: () ->
     @model.destroy()
     this.remove()
+  destroy: (e) ->
+    view = this
+    $(e.target).confirmable {
+      callback: ()->
+        view.model.destroy()
+        view.remove()
+    },'show'
 
     return false
 

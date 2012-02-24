@@ -1,4 +1,5 @@
 <td class="popper" data-placement="top" data-content="Click the pencil to edit this Coupon's name." title="Renaming"><i class="icon-pencil"></i><span class="editable-name"><%= name %></span></td>
 <td><%= list_name %></td>
-<td class="popper" data-placement="top" data-content="Enter in an email address to mark their coupon as used." title="Marking the deal as done."><a href="#/<%= id %>/consume" class="btn btn-primary">Consume</a></td>
-<td class="popper destroy" data-placement="top" data-content="Delete all coupon data here and in MailChimp." title="Kablamo"><a href="#/<%= id %>/destroy" class="btn btn-danger">Destroy</a></td>
+<td class="popper" data-placement="top" data-content="Enter an email address to mark their coupon as used." title="Marking the deal as done."><a href="#/<%= id %>/consume" class="btn btn-primary">Consume</a></td>
+<td class="popper" data-placement="top" data-content="Delete all coupon data here and in MailChimp." title="Kablamo"><a href="#/<%= id %>/destroy" class="btn btn-danger destroy" data-action="destroy" data-header="Hold up." data-body="Deleting '<%=name%>' will remove the field from the list in Mailchimp as well. All of the data regarding who has used this coupon will go poof.">Destroy</a></td>
+<td class="popper"><a href="#" class="more btn">More</a></td>

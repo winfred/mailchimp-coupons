@@ -5,7 +5,7 @@
 // the compiled file.
 //
 //= require jquery
-//= require jquery_ujs
+//= require lib/jquery-confirmable
 //= require twitter/bootstrap
 //= require underscore
 //= require backbone

@@ -41,3 +41,10 @@ $(document).ready ->
       MailchimpCoupons.Views.showError("Uh oh, it looks like there was a connection error.")
 
   })
+  $.confirmableDefaults({
+    header: "Are you sure?"
+    show: ()->
+      $('.modal').modal('show')
+    hide: ()->
+      $('.modal').modal('hide')
+  })
