@@ -93,7 +93,16 @@ class CouponsController < ApplicationController
   def subscribe
     res = current_user.api.listSubscribe(id: params[:list_id],email_address: params[:email],
                                                 merge_vars: {"OPTIN-IP" => request.remote_ip, "OPTIN-TIME" => Time.now})
-    logger.info res.inspect
     render json:  res
+  end
+
+  def send_to_consumed
+    @coupon = current_user.coupons.find(params[:id])
+    render json: {url: @coupon.create_consumed_campaign}
+  end
+  
+  def send_to_unconsumed
+    @coupon = current_user.coupons.find(params[:id])
+    render json: {url: @coupon.create_unconsumed_campaign}
   end
 end

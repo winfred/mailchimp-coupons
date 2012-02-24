@@ -25,7 +25,8 @@ class MailchimpCoupons.Views.Coupons.ConsumeView extends Backbone.View
           when "NotSubscribed" then view.renderNotSubscribed(email)
           when "Consumed" then view.renderConsumed(email)
           when "AlreadyConsumed" then view.renderFailure(email)
-
+    
+    false
   subscribe: (email) ->
     $.post "/coupons/#{@model.id}/subscribe/",{email:email,list_id: @model.attributes.list_id},
       (data,text,xhr) ->

@@ -5,6 +5,8 @@ MailchimpCoupons::Application.routes.draw do
   resources :coupons do
     post '/consume', to: 'coupons#consume', as: 'consume_coupon', on: :member
     post '/subscribe', to: 'coupons#subscribe', as: 'subscribe', on: :member
+    post '/send_to_consumed', to: 'coupons#send_to_consumed', as: "send_to_consumed", on: :member
+    post '/send_to_unconsumed', to: 'coupons#send_to_unconsumed', as: "send_to_unconsumed", on: :member
   end
 
   get  '/dashboard', to: 'home#show'

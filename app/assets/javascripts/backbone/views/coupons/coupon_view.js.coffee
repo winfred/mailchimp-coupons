@@ -9,6 +9,10 @@ class MailchimpCoupons.Views.Coupons.CouponView extends Backbone.View
     "blur .editable-name input": "update"
     "mouseenter .popper": "showPopover"
     "mouseleave .popper": "hidePopover"
+    "click .send-to-consumed": "sendToConsumed"
+    "click .send-to-unconsumed": "sendToUnconsumed"
+    
+    
 
   tagName: "tr"
 
@@ -48,3 +52,19 @@ class MailchimpCoupons.Views.Coupons.CouponView extends Backbone.View
   render: ->
     $(@el).html(@template(@model.toJSON() ))
     return this
+
+  sendToConsumed: (e) ->
+    button = e.target
+    $(button).removeClass('send-to-consumed').addClass('disabled').text('loading')
+    $.post("/coupons/#{@model.id}/send_to_consumed", (data,text,xhr) -> 
+      MailchimpCoupons.Views.showSuccess("<strong>Success!</strong> Your campaign has been created and can be edited <a href='#{data.url}' target='_blank'>here<a/>.",{html: true})
+      $(button).removeClass('disabled').addClass('send-to-consumed').text('Send to Consumers')
+    )
+    
+  sendToUnconsumed: (e) ->
+    button = e.target
+    $(button).removeClass('send-to-unconsumed').addClass('disabled').text('loading')
+    $.post("/coupons/#{@model.id}/send_to_unconsumed", (data,text,xhr) -> 
+      MailchimpCoupons.Views.showSuccess("<strong>Success!</strong> Your campaign has been created and can be edited <a href='#{data.url}' target='_blank'>here<a/>.",{html: true})
+      $(button).addClass('send-to-unconsumed').removeClass('disabled').text('Send to Non-consumers')
+    )

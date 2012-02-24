@@ -1,8 +1,8 @@
 GIT
-  remote: git://github.com/wnadeau/mailchimp-gem.git
-  revision: b1b59011c7bbf5aec31e2f47b8946db437494951
+  remote: git://github.com/mailchimp/mailchimp-gem.git
+  revision: 4215bfc2d23eb44b71fda8d5ec7ca71d7b49adb7
   specs:
-    mailchimp (0.0.5.alpha)
+    mailchimp (0.0.6.alpha)
       httparty
 
 GEM
