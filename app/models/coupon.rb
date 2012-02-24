@@ -18,26 +18,13 @@ class Coupon < ActiveRecord::Base
   end
   
   def create_consumed_campaign
-    list = user.api.lists(filters: {list_id: list_id})['data'][0]
-    campaign_url(user.api.campaignCreate(type: 'regular', options: {
-          list_id: list_id, title: name, subject: list['default_subject'],
-          from_name: list['default_from_name'], from_email: list['default_from_email'], to_name: name},
-        content: {html_HEADER:"", html_MAIN:"", html_SIDECOLUMN:"", html_FOOTER:"", text: name},
-        segment_opts: {match: "all", conditions: [{field: tag, op: "eq", value: "consumed"}]}))
+    campaign_url_for(user.api.campaignCreate(default_campaign_options.merge({
+        segment_opts: {match: "all", conditions: [{field: tag, op: "eq", value: "consumed"}]}})))
   end
   
   def create_unconsumed_campaign
-    list = user.api.lists(filters: {list_id: list_id})['data'][0]
-    campaign_url(user.api.campaignCreate(type: 'regular', options: {
-          list_id: list_id, title: name, subject: list['default_subject'],
-          from_name: list['default_from_name'], from_email: list['default_from_email'], to_name: name},
-        content: {html_HEADER:"", html_MAIN:"", html_SIDECOLUMN:"", html_FOOTER:"", text: name},
-        segment_opts: {match: "all", conditions: [{field: tag, op: "ne", value: "consumed"}]})) 
-  end
-  
-  def campaign_url(cid)
-    web_id = user.api.campaigns(filters: {campaign_id: cid})['data'][0]['web_id']
-    "https://#{user.api.api_key.split("-")[1]}.admin.mailchimp.com/campaigns/wizard/recipients?id=#{web_id}"
+    campaign_url_for(user.api.campaignCreate(default_campaign_options.merge({
+      segment_opts: {match: "all", conditions: [{field: tag, op: "ne", value: "consumed"}]}})))
   end
   
   def consume(email)
@@ -64,5 +51,18 @@ class Coupon < ActiveRecord::Base
     def consume_and_respond(email)
       user.api.listUpdateMember(id: list_id, email_address: email, merge_vars: {"#{tag}" => 'consumed'})
       {response: "Consumed", email: email}
+    end
+    
+    def default_campaign_options
+      list = user.api.lists(filters: {list_id: list_id})['data'][0]
+      {type: 'regular', options: {
+            list_id: list_id, title: name, subject: list['default_subject'],
+            from_name: list['default_from_name'], from_email: list['default_from_email'], to_name: name},
+          content: {html_HEADER:"", html_MAIN:"", html_SIDECOLUMN:"", html_FOOTER:"", text: name}}
+    end
+    
+    def campaign_url_for(cid)
+      web_id = user.api.campaigns(filters: {campaign_id: cid})['data'][0]['web_id']
+      "https://#{user.api.api_key.split("-")[1]}.admin.mailchimp.com/campaigns/wizard/recipients?id=#{web_id}"
     end
 end
