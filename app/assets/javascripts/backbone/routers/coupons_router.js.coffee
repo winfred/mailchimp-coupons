@@ -21,18 +21,6 @@ class MailchimpCoupons.Routers.CouponsRouter extends Backbone.Router
     @view = new MailchimpCoupons.Views.Coupons.IndexView(coupons: @coupons)
     $("#coupons").html(@view.render().el)
 
-  show: (id) ->
-    coupon = @coupons.get(id)
-
-    @view = new MailchimpCoupons.Views.Coupons.ShowView(model: coupon)
-    $("#coupons").html(@view.render().el)
-
-  edit: (id) ->
-    coupon = @coupons.get(id)
-
-    @view = new MailchimpCoupons.Views.Coupons.EditView(model: coupon)
-    $("#coupons").html(@view.render().el)
-
   consume: (id) ->
     coupon = @coupons.get(id)
     $('.popover').remove()

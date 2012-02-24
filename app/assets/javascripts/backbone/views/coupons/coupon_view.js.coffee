@@ -12,9 +12,6 @@ class MailchimpCoupons.Views.Coupons.CouponView extends Backbone.View
 
   tagName: "tr"
 
-  destroy: () ->
-    @model.destroy()
-    this.remove()
   destroy: (e) ->
     view = this
     $(e.target).confirmable {
@@ -47,8 +44,6 @@ class MailchimpCoupons.Views.Coupons.CouponView extends Backbone.View
         success : (coupon) =>
           @model = coupon
       )
-
-
 
   render: ->
     $(@el).html(@template(@model.toJSON() ))
